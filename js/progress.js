@@ -50,6 +50,21 @@ const ProgressManager = {
     localStorage.setItem(KEYS.lastSection, sectionId);
   },
 
+  resetSection(sectionId) {
+    const buckets   = JSON.parse(localStorage.getItem(KEYS.buckets) || '{}');
+    const questions = (window.QUESTIONS || []).filter(q => q.section === sectionId);
+    for (const q of questions) delete buckets[q.id];
+    localStorage.setItem(KEYS.buckets, JSON.stringify(buckets));
+  },
+
+  resetAllProgress() {
+    localStorage.removeItem(KEYS.buckets);
+  },
+
+  resetExams() {
+    localStorage.removeItem(KEYS.examHistory);
+  },
+
   reset() {
     localStorage.removeItem(KEYS.buckets);
     localStorage.removeItem(KEYS.examHistory);
