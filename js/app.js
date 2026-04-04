@@ -178,7 +178,7 @@ const App = (() => {
         </div>
 
         <div class="sd-mode-list" style="--sc:${s.color}">
-          <button class="sd-mode-btn" onclick="App.startLearn(${id})">
+          <button class="sd-mode-btn" onclick="App.openLearnModal(${id})">
             <span class="sd-mode-icon">📖</span>
             <div>
               <div class="sd-mode-title">Nauka</div>
@@ -317,9 +317,41 @@ const App = (() => {
   }
 
   // ─── Learn mode ───────────────────────────────────────────────
-  function startLearn(sectionId) {
+  function openLearnModal(id) {
+    const s     = sec(id);
+    const color = s ? s.color : 'var(--green)';
+    const total = (window.QUESTIONS||[]).filter(q => q.section === id).length;
+    const weak  = (window.QUESTIONS||[]).filter(q => {
+      const b = ProgressManager.getBucket(q.id);
+      return q.section === id && (b === 'partial' || b === 'unknown');
+    }).length;
+
+    const html = `<div style="display:flex;flex-direction:column;gap:10px;--sc:${color}">
+      <button class="sd-mode-btn" onclick="App.closeModal();App.startLearn(${id},'all')">
+        <span class="sd-mode-icon">📚</span>
+        <div>
+          <div class="sd-mode-title">Wszystkie pytania</div>
+          <div class="sd-mode-desc">${total} pytań · losowa kolejność</div>
+        </div>
+      </button>
+      <button class="sd-mode-btn${weak===0?' disabled':''}"
+        ${weak>0?`onclick="App.closeModal();App.startLearn(${id},'weak')"`:''}>
+        <span class="sd-mode-icon">🎯</span>
+        <div>
+          <div class="sd-mode-title">Tylko słabe</div>
+          <div class="sd-mode-desc">${weak>0
+            ? `${weak} pytań · nie znam + częściowo`
+            : 'Wszystkie pytania opanowane! 🎉'}</div>
+        </div>
+      </button>
+    </div>`;
+
+    openModal(`📖 Nauka — ${s ? esc(s.name) : ''}`, html);
+  }
+
+  function startLearn(sectionId, filter) {
     Quiz.stop();
-    Quiz.start('learn', sectionId||0);
+    Quiz.start('learn', sectionId||0, filter||'all');
     _learnQ();
   }
 
@@ -404,19 +436,38 @@ const App = (() => {
   }
 
   function _learnDone() {
-    const s   = Quiz.getState();
-    const sid = s ? s.sectionId : 0;
-    const st  = ProgressManager.getStats(sid||0);
+    const s      = Quiz.getState();
+    const sid    = s ? s.sectionId : 0;
+    const filter = s ? s.filter : 'all';
+    const sec_   = sec(sid);
+    const st     = ProgressManager.getStats(sid||0);
+
+    // For weak mode: show how many of studied questions are now 'know'
+    let barPct, barLabel;
+    if (filter === 'weak' && s) {
+      const nowKnow = s.questions.filter(q => ProgressManager.getBucket(q.id) === 'know').length;
+      barPct   = s.questions.length > 0 ? Math.round(nowKnow / s.questions.length * 100) : 0;
+      barLabel = `${nowKnow} / ${s.questions.length} opanowanych w tej sesji`;
+    } else {
+      barPct   = pct(st);
+      barLabel = `${st.know} / ${st.total} opanowanych w sekcji`;
+    }
+
+    const modeLabel = filter === 'weak' ? '🎯 Tylko słabe' : '📚 Wszystkie pytania';
+    const secLabel  = sec_ ? `${sec_.name}` : '';
+
     hdTabs();
     app().innerHTML = `<div class="done-wrap">
       <div class="done-card">
         <div class="done-emoji">🎉</div>
         <div class="done-title">Sesja zakończona!</div>
-        <div class="done-sub">Przerobiono ${s ? s.questions.length : 0} pytań</div>
-        ${pbar(pct(st))}
+        <div class="done-sub" style="margin-bottom:4px">${secLabel ? esc(secLabel) + ' · ' : ''}${modeLabel}</div>
+        <div class="done-sub" style="margin-bottom:14px">Przerobiono ${s ? s.questions.length : 0} pytań</div>
+        ${pbar(barPct)}
+        <div style="margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text3)">${barLabel}</div>
         <div style="margin-top:10px">${badges(st)}</div>
         <div class="btn-row" style="margin-top:24px;justify-content:center">
-          <button class="btn btn-primary" onclick="App.startLearn(${sid})">🔄 Jeszcze raz</button>
+          <button class="btn btn-primary" onclick="App.openLearnModal(${sid})">🔄 Jeszcze raz</button>
           <button class="btn btn-secondary" onclick="App.setTab('sections')">← Sekcje</button>
         </div>
       </div>
@@ -700,7 +751,7 @@ const App = (() => {
     setTab, goHome, openSection, backToGrid, goToSection,
     openGlobalCheatsheet, openSectionCheatsheet,
     openModal, closeModal,
-    startLearn, startQuiz, startExam,
+    openLearnModal, startLearn, startQuiz, startExam,
     learnToggle, learnCheck, learnBucket,
     quizToggle, quizCheck,
     examToggle, examNext, examFinish,

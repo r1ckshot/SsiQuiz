@@ -10,11 +10,17 @@ const Quiz = (() => {
     return a;
   }
 
-  function start(mode, sectionId) {
+  function start(mode, sectionId, filter) {
     stopTimer();
     let pool = (window.QUESTIONS || []).slice();
     if (sectionId && sectionId !== 0) {
       pool = pool.filter(q => q.section === sectionId);
+    }
+    if (filter === 'weak') {
+      pool = pool.filter(q => {
+        const b = ProgressManager.getBucket(q.id);
+        return b === 'partial' || b === 'unknown';
+      });
     }
     pool = shuffle(pool);
     if (mode === 'exam') pool = pool.slice(0, 30);
@@ -22,6 +28,7 @@ const Quiz = (() => {
     state = {
       mode,
       sectionId: sectionId || 0,
+      filter: filter || 'all',
       questions: pool,
       current: 0,
       selected: [],
