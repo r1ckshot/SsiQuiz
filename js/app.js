@@ -201,7 +201,7 @@ const App = (() => {
           </button>
         </div>
 
-        <div style="margin-top:14px;display:flex;justify-content:flex-end">
+        <div class="sd-reset" style="margin-top:14px;display:flex;justify-content:flex-end">
           <button class="btn btn-ghost" style="font-size:.82rem;padding:7px 16px;opacity:.7"
             onclick="App.resetSection(${id})">↺ Reset postępu sekcji</button>
         </div>
@@ -251,6 +251,7 @@ const App = (() => {
   function closeModal(e) {
     if (e && e.target !== document.getElementById('modal')) return;
     const m = document.getElementById('modal');
+    if (!m.classList.contains('open')) return;
     m.classList.add('closing');
     setTimeout(() => m.classList.remove('open', 'closing'), 150);
   }
@@ -296,20 +297,19 @@ const App = (() => {
           <div class="big-ring-title">Całkowity postęp</div>
           <div class="big-ring-sub">${gs.total} pytań · ${gs.know} opanowanych</div>
           ${badges(gs)}
-          <div style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-primary" onclick="App.startExam()">🎓 Egzamin</button>
+          <div class="progress-reset-row">
             <button class="btn btn-ghost" onclick="App.resetSectionProgress()">↺ Reset sekcji</button>
             <button class="btn btn-ghost" onclick="App.resetExams()">↺ Reset egzaminów</button>
           </div>
         </div>
       </div>
 
-      <div class="section-heading">Postęp per sekcja</div>
+      <div class="section-heading" style="animation:liftIn .25s ease both;animation-delay:.1s">Postęp per sekcja</div>
       <div class="sec-bars">${bars}</div>
 
-      <div class="divider"></div>
-      <div class="section-heading">Historia egzaminów</div>
-      <table class="hist-table">
+      <div class="divider" style="animation:fadeIn .3s ease both;animation-delay:.15s"></div>
+      <div class="section-heading" style="animation:liftIn .25s ease both;animation-delay:.18s">Historia egzaminów</div>
+      <table class="hist-table" style="animation:liftIn .3s ease both;animation-delay:.22s">
         <thead><tr><th>Data</th><th>Wynik</th><th>Pkt</th></tr></thead>
         <tbody>${histRows}</tbody>
       </table>
@@ -382,6 +382,9 @@ const App = (() => {
       else if (r.correct.includes(i) && !r.selected.includes(i)) el.classList.add('missed');
     });
 
+    document.querySelectorAll('.opt.wrong').forEach(el => {
+      el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
+    });
     document.getElementById('bucket-area').innerHTML = `
       <div class="bucket-row">
         <button class="btn-bucket know"    onclick="App.learnBucket('know')">✓ Wiem</button>
@@ -488,6 +491,9 @@ const App = (() => {
       if      (r.correct.includes(i) && r.selected.includes(i))  el.classList.add('correct');
       else if (r.selected.includes(i) && !r.correct.includes(i)) el.classList.add('wrong');
       else if (r.correct.includes(i) && !r.selected.includes(i)) el.classList.add('missed');
+    });
+    document.querySelectorAll('.opt.wrong').forEach(el => {
+      el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
     });
     const btn = document.getElementById('btn-check');
     btn.textContent = 'Dalej →';
@@ -670,12 +676,6 @@ const App = (() => {
     _renderSectionDetail(id);
   }
 
-  function resetProgress() {
-    if (!confirm('Czy na pewno chcesz zresetować wszystkie postępy?')) return;
-    ProgressManager.reset();
-    _renderProgressTab();
-  }
-
   // ─── Confetti ─────────────────────────────────────────────────
   function _confetti() {
     const layer  = document.getElementById('confetti');
@@ -692,6 +692,9 @@ const App = (() => {
 
   // ─── Init ─────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => { render(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
 
   return {
     setTab, goHome, openSection, backToGrid, goToSection,
@@ -702,6 +705,6 @@ const App = (() => {
     quizToggle, quizCheck,
     examToggle, examNext, examFinish,
     backFromQuiz, renderResults,
-    resetProgress, resetSectionProgress, resetExams, resetSection,
+    resetSectionProgress, resetExams, resetSection,
   };
 })();
