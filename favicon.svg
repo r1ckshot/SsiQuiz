@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <rect width="180" height="180" rx="28" fill="#070709"/>
+  <text x="90" y="88" font-family="'Courier New', monospace" font-size="90" font-weight="700" fill="#22c55e" text-anchor="middle" letter-spacing="-3">SSI</text>
+  <line x1="18" y1="100" x2="162" y2="100" stroke="#22c55e" stroke-width="2" opacity=".3"/>
+  <text x="90" y="140" font-family="'Courier New', monospace" font-size="38" font-weight="600" fill="#22c55e" text-anchor="middle" letter-spacing="10" opacity=".85">QUIZ</text>
+</svg>

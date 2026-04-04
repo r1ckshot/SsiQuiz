@@ -1,0 +1,17 @@
+{
+  "name": "SSI Quiz",
+  "short_name": "SSI Quiz",
+  "description": "Aplikacja do nauki na egzamin SSI",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#070709",
+  "theme_color": "#070709",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
