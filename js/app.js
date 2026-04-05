@@ -379,7 +379,7 @@ const App = (() => {
           </div>
           <div class="q-text">${esc(q.question)}</div>
           <div class="opts" id="opts">${q.options.map((o,i)=>`
-            <div class="opt" id="opt-${i}" onclick="App.learnToggle(${i})">
+            <div class="opt" id="opt-${i}" onclick="App.learnToggle(${i})" ontouchend="event.preventDefault();App.learnToggle(${i})">
               <div class="opt-box">${checkSvg()}</div>
               <div class="opt-text">${esc(o)}</div>
             </div>`).join('')}
@@ -505,7 +505,7 @@ const App = (() => {
           </div>
           <div class="q-text">${esc(q.question)}</div>
           <div class="opts" id="opts">${q.options.map((o,i)=>`
-            <div class="opt" id="opt-${i}" onclick="App.quizToggle(${i})">
+            <div class="opt" id="opt-${i}" onclick="App.quizToggle(${i})" ontouchend="event.preventDefault();App.quizToggle(${i})">
               <div class="opt-box">${checkSvg()}</div>
               <div class="opt-text">${esc(o)}</div>
             </div>`).join('')}
@@ -601,7 +601,7 @@ const App = (() => {
           </div>
           <div class="q-text">${esc(q.question)}</div>
           <div class="opts" id="opts">${q.options.map((o,i)=>`
-            <div class="opt" id="opt-${i}" onclick="App.examToggle(${i})">
+            <div class="opt" id="opt-${i}" onclick="App.examToggle(${i})" ontouchend="event.preventDefault();App.examToggle(${i})">
               <div class="opt-box">${checkSvg()}</div>
               <div class="opt-text">${esc(o)}</div>
             </div>`).join('')}

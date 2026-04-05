@@ -39,7 +39,7 @@ body {
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
 }
-button { cursor:pointer; font-family:inherit; background:none; border:none; color:inherit; }
+button { cursor:pointer; font-family:inherit; background:none; border:none; color:inherit; touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
 
 ::-webkit-scrollbar { width:4px; }
 ::-webkit-scrollbar-track { background:transparent; }
@@ -572,6 +572,8 @@ button { cursor:pointer; font-family:inherit; background:none; border:none; colo
   background:var(--bg2);
   cursor:pointer;
   user-select:none;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
   transition:background var(--ease),border-color var(--ease);
   animation:liftIn .22s ease both;
 }
