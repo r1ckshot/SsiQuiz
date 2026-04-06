@@ -744,3 +744,23 @@ button { cursor:pointer; font-family:inherit; background:none; border:none; colo
   .sec-detail-page { padding:20px 16px; }
   .tab { padding:6px 14px; }
 }
+
+/* ─── Landscape / short screens ──────────────────────────────── */
+@media(max-height:500px) {
+  :root { --hd-h:46px; }
+  .sec-detail-page { padding:12px 16px; }
+  .sd-back { margin-bottom:12px; }
+  .sd-hero { margin-bottom:12px; gap:12px; }
+  .sd-icon { font-size:1.8rem; }
+  .sd-title { font-size:1.15rem; }
+  .sd-progress-row { padding:12px 16px; margin-bottom:12px; }
+  .sd-mode-btn { padding:10px 14px; }
+  .sd-mode-icon { font-size:1.1rem; width:28px; }
+  .sd-mode-title { font-size:.95rem; }
+  .sd-mode-desc { font-size:.8rem; margin-top:1px; }
+  .big-ring-wrap { flex-direction:row; padding:14px 20px; gap:20px; text-align:left; }
+  .done-card { padding:24px 24px; }
+  .done-emoji { font-size:2rem; margin-bottom:8px; }
+  .sections-page, .progress-page, .results-page { padding:14px 16px; }
+  .sec-grid { gap:6px; }
+}
