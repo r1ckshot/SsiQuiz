@@ -744,7 +744,32 @@ const App = (() => {
   // ─── Init ─────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => { render(); });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Escape') { closeModal(); return; }
+
+    const s = Quiz.getState();
+    if (!s) return;
+
+    // 1–5 → select option
+    const num = parseInt(e.key);
+    if (num >= 1 && num <= 5) {
+      const idx = num - 1;
+      const opt = document.getElementById(`opt-${idx}`);
+      if (!opt || opt.classList.contains('disabled')) return;
+      if (s.mode === 'learn') learnToggle(idx);
+      else if (s.mode === 'quiz') quizToggle(idx);
+      else if (s.mode === 'exam') examToggle(idx);
+      return;
+    }
+
+    // Enter → Sprawdź / Dalej (not in learn bucket-row state)
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const btnCheck = document.getElementById('btn-check');
+      if (btnCheck && btnCheck.style.display !== 'none') { btnCheck.click(); return; }
+      // exam: primary footer button
+      const primary = document.querySelector('.quiz-footer .btn-primary');
+      if (primary) primary.click();
+    }
   });
 
   return {
