@@ -8,6 +8,19 @@ const App = (() => {
   const hd  = () => document.getElementById('hd');
   const app = () => document.getElementById('app');
 
+  // ─── Touch scroll guard ───────────────────────────────────────
+  let _didScroll = false;
+  document.addEventListener('touchstart', () => { _didScroll = false; }, {passive:true});
+  document.addEventListener('touchmove',  () => { _didScroll = true;  }, {passive:true});
+
+  function optTap(e, mode, idx) {
+    if (_didScroll) return;
+    e.preventDefault();
+    if      (mode === 'learn') learnToggle(idx);
+    else if (mode === 'quiz')  quizToggle(idx);
+    else if (mode === 'exam')  examToggle(idx);
+  }
+
   // ─── Helpers ──────────────────────────────────────────────────
   function esc(s) {
     return String(s)
@@ -379,7 +392,7 @@ const App = (() => {
           </div>
           <div class="q-text">${esc(q.question)}</div>
           <div class="opts" id="opts">${q.options.map((o,i)=>`
-            <div class="opt" id="opt-${i}" onclick="App.learnToggle(${i})" ontouchend="event.preventDefault();App.learnToggle(${i})">
+            <div class="opt" id="opt-${i}" onclick="App.learnToggle(${i})" ontouchend="App.optTap(event,'learn',${i})">
               <div class="opt-box">${checkSvg()}</div>
               <div class="opt-text">${esc(o)}</div>
             </div>`).join('')}
@@ -505,7 +518,7 @@ const App = (() => {
           </div>
           <div class="q-text">${esc(q.question)}</div>
           <div class="opts" id="opts">${q.options.map((o,i)=>`
-            <div class="opt" id="opt-${i}" onclick="App.quizToggle(${i})" ontouchend="event.preventDefault();App.quizToggle(${i})">
+            <div class="opt" id="opt-${i}" onclick="App.quizToggle(${i})" ontouchend="App.optTap(event,'quiz',${i})">
               <div class="opt-box">${checkSvg()}</div>
               <div class="opt-text">${esc(o)}</div>
             </div>`).join('')}
@@ -601,7 +614,7 @@ const App = (() => {
           </div>
           <div class="q-text">${esc(q.question)}</div>
           <div class="opts" id="opts">${q.options.map((o,i)=>`
-            <div class="opt" id="opt-${i}" onclick="App.examToggle(${i})" ontouchend="event.preventDefault();App.examToggle(${i})">
+            <div class="opt" id="opt-${i}" onclick="App.examToggle(${i})" ontouchend="App.optTap(event,'exam',${i})">
               <div class="opt-box">${checkSvg()}</div>
               <div class="opt-text">${esc(o)}</div>
             </div>`).join('')}
@@ -781,6 +794,6 @@ const App = (() => {
     quizToggle, quizCheck,
     examToggle, examNext, examFinish,
     backFromQuiz, renderResults,
-    resetSectionProgress, resetExams, resetSection,
+    resetSectionProgress, resetExams, resetSection, optTap,
   };
 })();
