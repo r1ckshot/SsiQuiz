@@ -189,12 +189,14 @@ button { cursor:pointer; font-family:inherit; background:none; border:none; colo
   transition:background var(--ease),transform var(--ease),box-shadow var(--ease),border-color var(--ease);
   animation:liftIn .3s ease both;
 }
-.sec-card:hover {
-  background:var(--card2);
-  transform:translateY(-3px);
-  box-shadow:0 8px 24px rgba(0,0,0,.3);
-  border-color:var(--border2);
-  border-top-color:var(--sc,var(--green));
+@media(hover:hover) {
+  .sec-card:hover {
+    background:var(--card2);
+    transform:translateY(-3px);
+    box-shadow:0 8px 24px rgba(0,0,0,.3);
+    border-color:var(--border2);
+    border-top-color:var(--sc,var(--green));
+  }
 }
 .sec-card-icon { font-size:1.7rem; }
 .sec-card-name {
@@ -312,11 +314,13 @@ button { cursor:pointer; font-family:inherit; background:none; border:none; colo
 .sd-mode-btn:nth-child(2) { animation-delay:.10s }
 .sd-mode-btn:nth-child(3) { animation-delay:.15s }
 .sd-reset { animation:liftIn .3s ease both; animation-delay:.22s; }
-.sd-mode-btn:hover {
-  background:var(--card2);
-  border-color:var(--sc,var(--green));
-  transform:translateY(-1px);
-  box-shadow:0 4px 18px rgba(0,0,0,.25);
+@media(hover:hover) {
+  .sd-mode-btn:hover {
+    background:var(--card2);
+    border-color:var(--sc,var(--green));
+    transform:translateY(-1px);
+    box-shadow:0 4px 18px rgba(0,0,0,.25);
+  }
 }
 .sd-mode-btn.disabled { opacity:.2; cursor:default; pointer-events:none; filter:grayscale(1); }
 .sd-mode-icon  { font-size:1.4rem; flex-shrink:0; width:36px; text-align:center; }
@@ -376,7 +380,7 @@ button { cursor:pointer; font-family:inherit; background:none; border:none; colo
   transition:background var(--ease),border-color var(--ease);
   animation:liftIn .3s ease both;
 }
-.sec-bar-row:hover { background:var(--bg3); border-color:var(--border); }
+@media(hover:hover) { .sec-bar-row:hover { background:var(--bg3); border-color:var(--border); } }
 .sec-bar-icon { font-size:1.1rem; flex-shrink:0; width:22px; text-align:center; }
 .sec-bar-info { flex:1; min-width:0; }
 .sec-bar-name {
@@ -582,7 +586,9 @@ button { cursor:pointer; font-family:inherit; background:none; border:none; colo
 .opt:nth-child(3){animation-delay:.06s}
 .opt:nth-child(4){animation-delay:.09s}
 .opt:nth-child(5){animation-delay:.12s}
-.opt:hover:not(.disabled) { border-color:var(--border2); background:var(--bg3); }
+@media(hover:hover) {
+  .opt:hover:not(.disabled) { border-color:var(--border2); background:var(--bg3); }
+}
 .opt.selected { border-color:var(--green); background:var(--green-dim); }
 .opt.correct  { border-color:var(--green)  !important; background:rgba(34,197,94,.10)  !important; }
 .opt.wrong    { border-color:var(--red)    !important; background:rgba(248,113,113,.09) !important; }
