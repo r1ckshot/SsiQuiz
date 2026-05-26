@@ -667,6 +667,32 @@ const App = (() => {
   }
 
   // ─── Results ──────────────────────────────────────────────────
+  function openWrongModal() {
+    const r = lastResults;
+    if (!r || !r.wrong.length) return;
+    const allQ = window.QUESTIONS || [];
+    const html = r.wrong.map((w, i) => {
+      const s   = sec(w.section);
+      const q   = allQ.find(q => q.id === w.id);
+      const optsHtml = q ? q.options.map((opt, idx) => {
+        const isCorrect  = w.correct.includes(idx);
+        const isSelected = w.selected.includes(idx);
+        let cls, icon;
+        if      (isCorrect && isSelected)  { cls = 'correct'; icon = '✓'; }
+        else if (isSelected && !isCorrect) { cls = 'wrong';   icon = '✗'; }
+        else if (isCorrect && !isSelected) { cls = 'missed';  icon = '○'; }
+        else                               { cls = 'neutral'; icon = '○'; }
+        return `<div class="wr-opt ${cls}">${icon} ${esc(opt)}</div>`;
+      }).join('') : '';
+      return `<div class="wr-item" style="animation-delay:${i*.04}s">
+        <div class="wr-meta">#${w.id} · <span style="color:${s?s.color:'var(--text3)'}">S${w.section}</span></div>
+        <div class="wr-question">${esc(w.question)}</div>
+        ${optsHtml}
+      </div>`;
+    }).join('');
+    openModal(`🔍 Błędne odpowiedzi (${r.wrong.length})`, html);
+  }
+
   function renderResults() {
     const r = lastResults;
     if (!r) { setTab('sections'); return; }
@@ -682,16 +708,25 @@ const App = (() => {
     const pass  = r.percent >= 60;
     const color = pass ? 'var(--green)' : 'var(--red)';
 
-    const wrongHtml = r.wrong.length
-      ? `<div class="section-heading" style="margin-top:0">Błędne odpowiedzi · ${r.wrong.length}</div>
-         <div class="wrong-list">${r.wrong.map((w,i) => {
-           const s = sec(w.section);
-           return `<div class="wrong-item" style="animation-delay:${i*.02}s">
-             <div class="wrong-meta">#${w.id} · <span style="color:${s?s.color:'var(--text3)'}">S${w.section}</span></div>
-             ${esc(w.question.length>95 ? w.question.slice(0,95)+'…' : w.question)}
-           </div>`;
-         }).join('')}</div>`
-      : `<p style="color:var(--green);font-weight:600;margin-bottom:20px">✓ Bezbłędnie!</p>`;
+    const reviewBtn = r.wrong.length
+      ? `<button class="btn btn-ghost" onclick="App.openWrongModal()">🔍 Przejrzyj błędy (${r.wrong.length})</button>`
+      : '';
+
+    const weakCallout = (() => {
+      if (!r.wrong.length) return '';
+      if (r.mode === 'exam') {
+        const bySec = {};
+        for (const w of r.wrong) bySec[w.section] = (bySec[w.section] || 0) + 1;
+        const parts = Object.entries(bySec)
+          .sort(([a],[b]) => a - b)
+          .map(([sid, cnt]) => {
+            const s = sec(parseInt(sid));
+            return `<span style="color:${s?s.color:'var(--text3)'}">S${sid}</span> ×${cnt}`;
+          }).join(' · ');
+        return `<div class="weak-callout">📌 ${r.wrong.length} pytań dodano do Słabej nauki: ${parts}</div>`;
+      }
+      return `<div class="weak-callout">📌 ${r.wrong.length} pytań dodano do Słabej nauki</div>`;
+    })();
 
     let breakdown = '';
     if (r.mode==='exam') {
@@ -715,15 +750,16 @@ const App = (() => {
           <div class="score-verdict">${pass ? '🎉 Zaliczone!' : '📚 Więcej nauki!'}</div>
           <div class="score-sub">${r.mode==='exam'?'Egzamin':'Quiz'} · ${r.correct} poprawnych</div>
           <div class="score-frac">${r.correct} / ${r.total} pytań</div>
-          <div class="btn-row" style="margin-top:16px">
+          <div class="btn-row results-btn-row" style="margin-top:16px">
             ${r.mode==='exam'
               ? `<button class="btn btn-primary" onclick="App.startExam()">🔄 Nowy egzamin</button>`
               : `<button class="btn btn-primary" onclick="App.startQuiz(${r.sectionId})">🔄 Jeszcze raz</button>`}
             <button class="btn btn-secondary" onclick="App.setTab('sections')">← Sekcje</button>
+            ${reviewBtn}
           </div>
         </div>
       </div>
-      ${wrongHtml}
+      ${weakCallout}
       ${breakdown}
     </div>`;
   }
@@ -800,7 +836,7 @@ const App = (() => {
     learnToggle, learnCheck, learnBucket,
     quizToggle, quizCheck,
     examToggle, examNext, examFinish,
-    backFromQuiz, renderResults,
+    backFromQuiz, renderResults, openWrongModal,
     resetSectionProgress, resetExams, resetSection, optTap,
   };
 })();

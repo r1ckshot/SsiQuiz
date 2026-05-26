@@ -690,7 +690,7 @@ button { cursor:pointer; font-family:inherit; background:none; border:none; colo
   border-radius:var(--r); padding:28px 32px; margin-bottom:28px;
   animation:liftIn .3s ease;
 }
-.score-info { flex:1; }
+.score-info    { flex:1; }
 .score-verdict { font-size:1.3rem; font-weight:800; color:var(--text); letter-spacing:-.02em; margin-bottom:4px; }
 .score-sub     { font-size:.9rem; color:var(--text2); }
 .score-frac    { font-family:'JetBrains Mono',monospace; font-size:.8rem; color:var(--text3); margin-top:4px; }
@@ -705,6 +705,29 @@ button { cursor:pointer; font-family:inherit; background:none; border:none; colo
   animation:liftIn .25s ease both;
 }
 .wrong-meta { font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--text3); margin-bottom:2px; }
+
+.weak-callout {
+  font-size:.85rem; color:var(--text2);
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:var(--r-sm); padding:9px 13px;
+  margin-bottom:10px; line-height:1.5;
+}
+
+.wr-item {
+  padding:14px 16px 12px;
+  border-left:2px solid var(--red);
+  background:rgba(248,113,113,.05);
+  border-radius:0 var(--r-sm) var(--r-sm) 0;
+  margin-bottom:12px;
+  animation:liftIn .25s ease both;
+}
+.wr-meta     { font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--text3); margin-bottom:5px; }
+.wr-question { font-size:.92rem; color:var(--text); font-weight:500; line-height:1.5; margin-bottom:9px; }
+.wr-opt         { font-size:.85rem; padding:4px 7px; border-radius:5px; margin-bottom:3px; line-height:1.4; }
+.wr-opt.correct { color:var(--green);  background:rgba(34,197,94,.10); }
+.wr-opt.wrong   { color:var(--red);    background:rgba(248,113,113,.09); }
+.wr-opt.missed  { color:var(--yellow); background:rgba(251,191,36,.09); }
+.wr-opt.neutral { color:var(--text3); }
 
 .divider { border:none; border-top:1px solid var(--border); margin:24px 0; }
 
@@ -748,6 +771,11 @@ button { cursor:pointer; font-family:inherit; background:none; border:none; colo
   .quiz-footer { padding:12px 18px; }
   .sections-page, .progress-page, .results-page { padding:20px 16px; }
   .sec-detail-page { padding:20px 16px; }
+  .score-wrap { flex-direction:column; text-align:center; gap:16px; padding:20px; }
+  .results-btn-row { flex-wrap:wrap; justify-content:center; }
+  .results-btn-row .btn:nth-child(1),
+  .results-btn-row .btn:nth-child(2) { flex:1; }
+  .results-btn-row .btn:nth-child(3) { width:100%; justify-content:center; }
   .tab { padding:6px 14px; }
 }
 
