@@ -32,6 +32,13 @@ const ProgressManager = {
     return stats;
   },
 
+  markWeak(qIds) {
+    if (!qIds || !qIds.length) return;
+    const buckets = JSON.parse(localStorage.getItem(KEYS.buckets) || '{}');
+    for (const id of qIds) buckets[id] = 'unknown';
+    localStorage.setItem(KEYS.buckets, JSON.stringify(buckets));
+  },
+
   saveExamResult(result) {
     const history = JSON.parse(localStorage.getItem(KEYS.examHistory) || '[]');
     history.unshift({ date: new Date().toISOString(), ...result });

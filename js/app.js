@@ -571,6 +571,9 @@ const App = (() => {
   function _finishSession() {
     lastResults = Quiz.getSessionResults();
     Quiz.stopTimer();
+    if (lastResults.wrong.length) {
+      ProgressManager.markWeak(lastResults.wrong.map(w => w.id));
+    }
     renderResults();
   }
 
@@ -653,6 +656,10 @@ const App = (() => {
   }
 
   function backFromQuiz() {
+    const partial = Quiz.getSessionResults();
+    if (partial && partial.wrong.length) {
+      ProgressManager.markWeak(partial.wrong.map(w => w.id));
+    }
     Quiz.stop();
     hdTabs();
     if (selSection) _renderSectionDetail(selSection);
