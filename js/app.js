@@ -657,7 +657,7 @@ const App = (() => {
 
   function backFromQuiz() {
     const partial = Quiz.getSessionResults();
-    if (partial && partial.wrong.length) {
+    if (partial && partial.mode !== 'learn' && partial.wrong.length) {
       ProgressManager.markWeak(partial.wrong.map(w => w.id));
     }
     Quiz.stop();
