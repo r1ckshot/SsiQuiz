@@ -22,7 +22,14 @@ const Quiz = (() => {
         return b === 'partial' || b === 'unknown';
       });
     }
-    pool = shuffle(pool);
+    pool = shuffle(pool).map(q => {
+      const order = shuffle(q.options.map((_, i) => i));
+      return {
+        ...q,
+        options: order.map(i => q.options[i]),
+        correct: q.correct.map(c => order.indexOf(c)),
+      };
+    });
     if (mode === 'exam') pool = pool.slice(0, 30);
 
     state = {
