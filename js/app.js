@@ -670,11 +670,9 @@ const App = (() => {
   function openWrongModal() {
     const r = lastResults;
     if (!r || !r.wrong.length) return;
-    const allQ = window.QUESTIONS || [];
     const html = r.wrong.map((w, i) => {
       const s   = sec(w.section);
-      const q   = allQ.find(q => q.id === w.id);
-      const optsHtml = q ? q.options.map((opt, idx) => {
+      const optsHtml = w.options ? w.options.map((opt, idx) => {
         const isCorrect  = w.correct.includes(idx);
         const isSelected = w.selected.includes(idx);
         let cls, icon;
@@ -684,7 +682,7 @@ const App = (() => {
         else                               { cls = 'neutral'; icon = '○'; }
         return `<div class="wr-opt ${cls}">${icon} ${esc(opt)}</div>`;
       }).join('') : '';
-      return `<div class="wr-item" style="animation-delay:${i*.04}s">
+      return `<div class="wr-item" style="animation-delay:${i * .04}s">
         <div class="wr-meta">#${w.id} · <span style="color:${s?s.color:'var(--text3)'}">S${w.section}</span></div>
         <div class="wr-question">${esc(w.question)}</div>
         ${optsHtml}

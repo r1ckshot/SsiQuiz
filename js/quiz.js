@@ -82,6 +82,7 @@ const Quiz = (() => {
       id: q.id,
       section: q.section,
       question: q.question,
+      options: q.options,
       selected,
       correct,
       isCorrect,
