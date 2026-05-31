@@ -11,7 +11,7 @@ window.QUESTIONS.push(
       'Mogą wymagać pamiętania stanów odwiedzonych, by uniknąć pętli.',
       'Często operują na przestrzeni stanów o dużym czynniku rozgałęzienia.',
     ],
-    correct: [0, 1, 2, 3, 4],
+    correct: [],
   },
   {
     id: 161,
