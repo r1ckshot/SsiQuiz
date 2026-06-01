@@ -422,7 +422,7 @@ window.QUESTIONS.push(
     question: 'Wskaż niepoprawne użycia strategii.',
     options: [
       'Szukamy najtańszej ścieżki przy silnie zróżnicowanych kosztach → użycie przeszukiwania w głąb, bo "zużywa mniej pamięci".',
-      'Nieznana głębokość celu, brak ograniczeń pamięci → przeszukiwanie wszerz zamiast przeszukiwania iteracyjnego w głąb.',
+      'Nieznana głębokość celu, ograniczona pamięć → przeszukiwanie wszerz zamiast przeszukiwania iteracyjnego w głąb.',
       'Dodatnie wagi krawędzi i potrzeba optymalności → użycie przeszukiwania z kosztami.',
       'Ustalony limit zasobów pamięci → rozważenie przeszukiwania w głąb lub przeszukiwania z ograniczeniem głębokości zamiast przeszukiwania wszerz.',
       'Równe koszty i płytki cel → użycie przeszukiwania wszerz.',
