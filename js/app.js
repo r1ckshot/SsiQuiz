@@ -8,6 +8,12 @@ const App = (() => {
   const hd  = () => document.getElementById('hd');
   const app = () => document.getElementById('app');
 
+  // ─── History / back-button nav ───────────────────────────────
+  let _inPopstate = false;
+  function _histPush() {
+    if (!_inPopstate) history.pushState(null, document.title);
+  }
+
   // ─── Touch scroll guard ───────────────────────────────────────
   let _didScroll = false;
   document.addEventListener('touchstart', () => { _didScroll = false; }, {passive:true});
@@ -145,6 +151,7 @@ const App = (() => {
   }
 
   function openSection(id) {
+    _histPush();
     selSection = id;
     ProgressManager.setLastSection(id);
     hdTabs();
@@ -152,6 +159,7 @@ const App = (() => {
   }
 
   function goToSection(id) {
+    _histPush();
     activeTab  = 'sections';
     selSection = id;
     ProgressManager.setLastSection(id);
@@ -363,6 +371,7 @@ const App = (() => {
   }
 
   function startLearn(sectionId, filter) {
+    _histPush();
     Quiz.stop();
     Quiz.start('learn', sectionId||0, filter||'all');
     _learnQ();
@@ -489,6 +498,7 @@ const App = (() => {
 
   // ─── Quiz mode ────────────────────────────────────────────────
   function startQuiz(sectionId) {
+    _histPush();
     Quiz.stop();
     Quiz.start('quiz', sectionId||0);
     _quizQ();
@@ -579,6 +589,7 @@ const App = (() => {
 
   // ─── Exam ─────────────────────────────────────────────────────
   function startExam() {
+    _histPush();
     selSection = null;
     Quiz.stop();
     Quiz.start('exam', 0);
@@ -694,6 +705,7 @@ const App = (() => {
   function renderResults() {
     const r = lastResults;
     if (!r) { setTab('sections'); return; }
+    _histPush();
 
     if (r.mode==='exam') {
       ProgressManager.saveExamResult({ score:r.correct, total:r.total, wrong:r.wrong.map(w=>w.id) });
@@ -824,6 +836,58 @@ const App = (() => {
       const primary = document.querySelector('.quiz-footer .btn-primary');
       if (primary) primary.click();
     }
+  });
+
+  // ─── Back-button (Android / browser) ─────────────────────────
+  history.replaceState(null, document.title);
+
+  window.addEventListener('popstate', () => {
+    _inPopstate = true;
+
+    const modal = document.getElementById('modal');
+    if (modal && modal.classList.contains('open')) {
+      modal.classList.add('closing');
+      setTimeout(() => modal.classList.remove('open', 'closing'), 150);
+      history.pushState(null, document.title);
+      _inPopstate = false;
+      return;
+    }
+
+    if (Quiz.getState()) {
+      backFromQuiz();
+      _inPopstate = false;
+      return;
+    }
+
+    if (lastResults) {
+      const wasQuiz = lastResults.mode === 'quiz';
+      const sid     = lastResults.sectionId;
+      lastResults   = null;
+      if (wasQuiz && sid) {
+        selSection = sid;
+        activeTab  = 'sections';
+        hdTabs();
+        _renderSectionDetail(sid);
+      } else {
+        selSection = null;
+        activeTab  = 'sections';
+        hdTabs();
+        _renderSectionsGrid();
+      }
+      _inPopstate = false;
+      return;
+    }
+
+    if (selSection) {
+      selSection = null;
+      activeTab  = 'sections';
+      hdTabs();
+      _renderSectionsGrid();
+      _inPopstate = false;
+      return;
+    }
+
+    _inPopstate = false;
   });
 
   return {
