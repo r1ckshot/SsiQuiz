@@ -99,7 +99,7 @@ window.QUESTIONS.push(
       'Normalizacja sprawia, że każda funkcja aktywacji staje się liniowa.',
       'Standaryzacja zawsze zwiększa zasięg saturacji w funkcjach ograniczonych.',
       'Utrzymanie wejść w rozsądnym zakresie pozwala unikać nasycenia funkcji ograniczonych i sprzyja przepływowi gradientu.',
-      'Standaryzacja wymusza, aby każda aktywacja była identyczna w całej sieci.',
+      'Standaryzacja wymusza, aby każda aktywacja była identyczna w całej sieci, co zastępuje proces uczenia.',
       'Normalizacja zawsze eliminuje potrzebę funkcji aktywacji w warstwach ukrytych.',
     ],
     correct: [2],
@@ -603,7 +603,7 @@ window.QUESTIONS.push(
     section: 8,
     question: 'Jak wybór funkcji aktywacji w warstwach ukrytych wpływa na głębokość i zbieżność uczenia?',
     options: [
-      'Wybór funkcji aktywacji nie ma żadnego wpływu na zbieżność ani na głębokość.',
+      'Wybór funkcji aktywacji nie ma żadnego wpływu na zbieżność ani na głębokość, bo decyduje wyłącznie rozmiar partii danych.',
       'Funkcje bez pochodnej są preferowane, bo przyspieszają obliczenia gradientu.',
       'Funkcje o lepszym przenoszeniu gradientu umożliwiają skuteczniejsze uczenie głębszych sieci i zmniejszają liczbę koniecznych iteracji.',
       'Każda funkcja aktywacji zapewnia identyczną dynamikę uczenia w każdej architekturze.',

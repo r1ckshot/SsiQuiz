@@ -318,7 +318,7 @@ window.QUESTIONS.push(
     question: 'Które elementy specyfikacji problemu są wspólne dla deterministycznych i niedeterministycznych problemów wieloetapowych?',
     options: [
       'Predykat celu lub zbiór stanów docelowych.',
-      'Definicja przestrzeni stanów i funkcji sukcesorów.',
+      'Definicja przestrzeni stanów i funkcji sukcesorów (różniąca się charakterem wyniku).',
       'Stan początkowy.',
       'Zbiór operatorów/działań wraz z ich pre-/post-warunkami (efektami).',
       'Opcjonalna funkcja kosztu kroków/ścieżki.',
@@ -346,7 +346,7 @@ window.QUESTIONS.push(
       'Nieinformowane zawsze znajduje rozwiązanie optymalne dla dowolnych kosztów.',
       'Heurystyka to gwarantowana dokładna odległość do celu.',
       'Nieinformowane nie używa wiedzy o problemie poza strukturą przestrzeni stanów.',
-      'Informowane nie eksploruje w ogóle gałęzi nieoptymalnych.',
+      'Informowane nie eksploruje w ogóle gałęzi nieoptymalnych — nie rozwija żadnych węzłów pobocznych.',
       'Informowane (np. A*) wykorzystuje heurystykę szacującą "odległość" do celu.',
     ],
     correct: [2, 4],

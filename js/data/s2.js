@@ -159,7 +159,7 @@ window.QUESTIONS.push(
   {
     id: 44,
     section: 2,
-    question: '(Python/pandas) Jak policzyć liczność grup pandas.DataFrame df według Age?',
+    question: '(Python/pandas) Jak policzyć liczność grup pandas.DataFrame df według Age (ile osób w każdym wieku)?',
     options: [
       'df.groupby("Age").len()',
       'df.value_counts()',

@@ -32,7 +32,7 @@ window.QUESTIONS.push(
     question: 'Jaki jest sens eksperymentu myślowego „chiński pokój" (Searle\'a) w dyskusji o definicji SI?',
     options: [
       'Teza, że rozumienie wynika wyłącznie z dużej mocy obliczeniowej (FLOPS).',
-      'Ma pokazać, że czysta manipulacja symbolami może wystarczyć do zadań „inteligentnych" na zewnątrz, ale nie implikuje rozumienia.',
+      'Ma pokazać, że czysta manipulacja symbolami może wystarczyć do zdań „inteligentnych" na zewnątrz, ale nie implikuje rozumienia.',
       'Przykład, że logika rozmyta zawsze daje poprawne tłumaczenia zdań.',
       'To dowód matematyczny, że żadna maszyna nie może przejść testu Turinga.',
       'Procedura inżynierska kalibracji tłumacza maszynowego dla języka chińskiego.',
