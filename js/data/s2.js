@@ -115,7 +115,7 @@ window.QUESTIONS.push(
       'a.mean()',
       'numpy.mean(a)',
     ],
-    correct: [3, 4],
+    correct: [0, 3, 4],
   },
   {
     id: 41,
@@ -141,7 +141,7 @@ window.QUESTIONS.push(
       'df = pandas.read_csv("people.csv"); df.describe()',
       'df = read_csv("people.csv"); df.describe()',
     ],
-    correct: [1, 3],
+    correct: [3],
   },
   {
     id: 43,
