@@ -30,7 +30,7 @@ const Quiz = (() => {
         correct: q.correct.map(c => order.indexOf(c)),
       };
     });
-    if (mode === 'exam') pool = pool.slice(0, 30);
+    if (mode === 'exam') pool = pool.slice(0, 40);
 
     state = {
       mode,
@@ -41,7 +41,7 @@ const Quiz = (() => {
       selected: [],
       answered: false,
       results: [],
-      timeLeft: mode === 'exam' ? 30 * 60 : 0,
+      timeLeft: mode === 'exam' ? 20 * 60 : 0,
       timerInterval: null,
       onTick: null,
       onEnd: null,
