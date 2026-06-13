@@ -3,28 +3,36 @@ window.CHEATSHEETS = {
     title: "Globalne pułapki (działają we WSZYSTKICH sekcjach)",
     patterns: [
       {
-        name: "🚫 Słowa absolutne → prawie zawsze FAŁSZ",
-        desc: "zawsze, nigdy, wyłącznie, jedynie, obowiązkowo, niemożliwe, zawsze lepszy",
+        name: "🔄 Najpierw: pytanie o PRAWDĘ czy FAŁSZ?",
+        desc: "„fałszywe / niepoprawne / błędnie / które NIE…” → zaznaczasz zdania BŁĘDNE, a reguły poniżej działają ODWROTNIE.",
+      },
+      {
+        name: "🚫 Słowa absolutne → FAŁSZ",
+        desc: "zawsze · wyłącznie · tylko · każdy · bez · gwarantuje · zastąpi · jedynie. (Wyjątki: „niemożliwe” i „musi” bywają poprawne.)",
         examples: [
-          "DL jest z natury lżejsze obliczeniowo od drzew w każdej skali",
-          "RL nie korzysta z funkcji nagrody",
+          "BFS jest zawsze optymalny",
+          "DL jest lżejsze obliczeniowo w każdej skali",
         ],
       },
       {
-        name: "🖥️ Fizyczna infrastruktura jako odpowiedź na pytanie o algorytm → FAŁSZ",
-        desc: "Jeśli w odpowiedzi pojawia się: liczba rdzeni CPU, częstotliwość procesora, rozmiar pliku, RAM — to pułapka.",
+        name: "🖥️ Infrastruktura zamiast algorytmu → FAŁSZ",
+        desc: "Liczba rdzeni CPU, częstotliwość, RAM, rozmiar pliku jako odpowiedź na pytanie o algorytm.",
         examples: [
           "Maksymalizacja zużycia CPU jako miary inteligencji",
-          "Liczba rdzeni CPU komputera",
+          "Zwiększanie częstotliwości CPU bez zmiany algorytmów",
         ],
       },
       {
-        name: "🤪 Techniczny nonsens (dwa prawdziwe terminy sklejone bezsensownie) → FAŁSZ",
-        desc: "Autorzy pytań często łączą dwa prawdziwe pojęcia w zdanie bez sensu.",
+        name: "🤪 Techniczny nonsens → FAŁSZ",
+        desc: "Dwa prawdziwe terminy sklejone bez sensu w jedno zdanie.",
         examples: [
           "Ominięcie praw Kirchhoffa przez strojenie hiperparametrów",
           "Zamiana prądu zmiennego w stały samym algorytmem",
         ],
+      },
+      {
+        name: "✅ Złagodzenia → PRAWDA",
+        desc: "np. · lub · może / mogą · zwykle · bywa · zależy od — zwykle poprawne.",
       },
     ],
   },
