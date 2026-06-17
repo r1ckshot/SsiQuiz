@@ -436,7 +436,7 @@ window.QUESTIONS.push(
     options: [
       'Dopasowanie progów/winsoryzacji wyłącznie na train, potem zastosowanie na valid/test.',
       'Ustalanie progów na całym zbiorze, a potem podział na train/test.',
-      'Zastąpienie skrajnie dużych (lub małych) wartości progiem w oparciu o wartości docelowe y.',
+      'Zastąpienie skrajnie dużych (lub małych) wartości ustalonym progiem w oparciu o wartości docelowe y.',
       'Dobór progów na podstawie metryk z test.',
       'Stosowanie Pipeline/ColumnTransformer do spójnego przetwarzania.',
     ],

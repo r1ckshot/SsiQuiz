@@ -437,7 +437,7 @@ window.QUESTIONS.push(
       'Nie wymaga funkcji g(n) — używa wyłącznie h(n).',
       'Wykonuje kolejne przeszukiwania w głąb ograniczone progiem na f(n) = g(n) + h(n), zwiększając próg w kolejnych iteracjach.',
       'Jest to przeszukiwanie wszerz z malejącym limitem głębokości.',
-      'Stosuje jedynie limit na liczbę odwiedzonych węzłów, nie na f(n).',
+      'Stosuje jedynie limit na liczbę odwiedzonych węzłów, nie na f(n) = g(n) + h(n).',
       'Zastępuje heurystykę dokładnym kosztem dojścia do celu.',
     ],
     correct: [1],

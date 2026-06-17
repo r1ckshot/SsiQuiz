@@ -255,7 +255,7 @@ window.QUESTIONS.push(
       'df = pandas.DataFrame({"Name": names, "Age": ages})',
       'df = pandas.DataFrame(names, ages)',
       'df = pandas.read_csv([names, ages])',
-      'df = pandas.Series({"Name": names, "Age": ages})',
+      'df = pandas.Series("Name": names, "Age": ages)',
       'df = pandas.DataFrame.from_dict({"Name": names, "Age": ages})',
     ],
     correct: [0, 4],
